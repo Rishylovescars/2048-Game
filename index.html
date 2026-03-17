@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2048 — The Infinite Puzzle</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="bg-orbs">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+</div>
+
+<div class="page-wrapper">
+  <!-- Header -->
+  <div class="header">
+    <div>
+      <div class="game-title">2048</div>
+      <div class="game-subtitle">The Infinite Puzzle</div>
+    </div>
+    <div class="score-area">
+      <div class="score-box">
+        <div class="score-label">Score</div>
+        <div class="score-value" id="score">0</div>
+      </div>
+      <div class="score-box">
+        <div class="score-label">Best</div>
+        <div class="score-value" id="best">0</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Controls -->
+  <div class="controls-row">
+    <div class="tag-info">Join tiles to reach&nbsp;<strong style="color:var(--accent)">2048</strong></div>
+    <button class="btn btn-ghost" id="helpBtn" onclick="showInstructions()">How to play</button>
+    <button class="btn btn-new" onclick="newGame()">New Game</button>
+  </div>
+
+  <!-- Grid -->
+  <div class="grid-container" id="grid">
+    <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+    <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+    <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+    <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+    <div id="tile-layer"></div>
+    <div class="overlay" id="overlay">
+      <div class="overlay-icon" id="overlayIcon">😔</div>
+      <div class="overlay-title" id="overlayTitle">Game Over</div>
+      <div class="overlay-score" id="overlayScore">0 pts</div>
+      <button class="btn btn-new" onclick="newGame()" style="margin-top:4px">Try Again</button>
+    </div>
+  </div>
+
+  <!-- Bottom Panel -->
+  <div class="bottom-panel">
+    <div class="panel-card">
+      <div class="panel-title">🏆 Leaderboard</div>
+      <ul class="lb-list" id="leaderboard"></ul>
+    </div>
+    <div class="panel-card">
+      <div class="panel-title">📊 Session Stats</div>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-num" id="stat-games">0</div>
+          <div class="stat-label">Games</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num" id="stat-moves">0</div>
+          <div class="stat-label">Moves</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num" id="stat-merges">0</div>
+          <div class="stat-label">Merges</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num" id="stat-best-tile">—</div>
+          <div class="stat-label">Best Tile</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Instructions Modal -->
+<div class="modal-backdrop" id="instrModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">How to<br>Play 2048</div>
+      <button class="modal-close" onclick="hideInstructions()">✕</button>
+    </div>
+    <div class="instruction-steps">
+      <div class="step">
+        <div class="step-icon">⌨️</div>
+        <div class="step-text">
+          <strong>Use Arrow Keys or WASD</strong>
+          <span>Press <span class="key-badge">↑</span><span class="key-badge">↓</span><span class="key-badge">←</span><span class="key-badge">→</span> to slide all tiles in that direction.</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-icon">🔗</div>
+        <div class="step-text">
+          <strong>Merge Matching Tiles</strong>
+          <span>When two tiles with the same number collide, they merge into one — doubling the value.</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-icon">✨</div>
+        <div class="step-text">
+          <strong>Reach 2048</strong>
+          <span>Keep merging to build up to 2048. You can keep going beyond for a higher score!</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-icon">📱</div>
+        <div class="step-text">
+          <strong>Touch &amp; Swipe</strong>
+          <span>On mobile, swipe in any direction to move tiles. Works like a charm.</span>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="hideInstructions()">Got it</button>
+      <button class="btn btn-new" onclick="hideInstructions(); newGame()">Start Fresh</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- Scripts (order matters) -->
+<script src="js/game.js"></script>
+<script src="js/render.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
